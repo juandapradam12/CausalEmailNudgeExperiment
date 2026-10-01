@@ -43,21 +43,21 @@ The names in the `grupo` column are **experiment arms**, not arbitrary labels:
 
 **`trat` (trat1 / trat2)** are the **interventions** we want to evaluate. Each defines a distinct potential outcome:
 
-$$
+```math
 Y_i(\text{ctrl}),\quad Y_i(\text{trat1}),\quad Y_i(\text{trat2})
-$$
+```
 
 For customer $i$ we only observe **one** — the one for the randomly assigned arm:
 
-$$
+```math
 Y_i^{\text{obs}} = Y_i(T_i), \quad T_i \in \{\text{ctrl}, \text{trat1}, \text{trat2}\}
-$$
+```
 
 The other two are **counterfactuals** (unobserved). Randomization lets us replace counterfactual expectations with the corresponding group means:
 
-$$
+```math
 ATE_{\text{trat2 vs ctrl}} = \mathbb{E}[Y(\text{trat2}) - Y(\text{ctrl})] \approx \bar{Y}_{\text{trat2}} - \bar{Y}_{\text{ctrl}}
-$$
+```
 
 **Analogy:** in a clinical trial, "placebo" is not "no medicine"; it is the reference treatment. Here `ctrl` is the reference email; `trat1` and `trat2` are the nudge variants.
 
@@ -79,9 +79,9 @@ For depth on conditional average treatment effect (CATE), meta-learners and doub
 
 In the data, **`ctor` is nested within `or`**: if `or = 0`, then `ctor = 0` always. Therefore:
 
-$$
+```math
 \text{ctor} = \mathbb{1}[\text{opened}] \times \mathbb{1}[\text{clicked}]
-$$
+```
 
 - **Open rate:** $\bar{or} = P(\text{open})$
 - **Click rate (`ctor`):** $P(\text{open} \cap \text{click})$ — overall click-conversion rate.
@@ -102,23 +102,23 @@ That is why we analyze **both outcomes** separately.
 
 For each customer $i$ there exist potential outcomes $Y_i(0), Y_i(1), Y_i(2)$ depending on the assigned arm. We only observe one:
 
-$$
+```math
 Y_i^{\text{obs}} = Y_i(T_i), \quad T_i \in \{\text{ctrl}, \text{trat1}, \text{trat2}\}
-$$
+```
 
 ### ATE (Average Treatment Effect)
 
 To compare `trat2` vs `ctrl` on click rate:
 
-$$
+```math
 average treatment effect (ATE) = \mathbb{E}[Y(\text{trat2}) - Y(\text{ctrl})]
-$$
+```
 
 In a randomized controlled trial (RCT) with a binary outcome, the natural estimator is the **difference in proportions**:
 
-$$
+```math
 \widehat{ATE} = \bar{Y}_{\text{trat2}} - \bar{Y}_{\text{ctrl}}
-$$
+```
 
 **Results in this dataset:**
 
@@ -140,9 +140,9 @@ $$
 
 ### CATE (Conditional Average Treatment Effect)
 
-$$
+```math
 CATE(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]
-$$
+```
 
 It answers: *how much extra benefit does a customer with profile $x$ get from receiving the treatment?*
 
@@ -216,9 +216,9 @@ Implemented checks:
 
 For binary proportions, the standard error is:
 
-$$
+```math
 SE = \sqrt{\frac{p_T(1-p_T)}{n_T} + \frac{p_C(1-p_C)}{n_C}}
-$$
+```
 
 95% CI: $\widehat{ATE} \pm 1.96 \cdot SE$
 
@@ -236,9 +236,9 @@ impact = scale_impact(ate_pp=0.4015, population_size=500_000, outcome_label="cli
 
 Model:
 
-$$
+```math
 \log\frac{P(Y=1)}{1-P(Y=1)} = \beta_0 + \beta_1 \cdot \mathbb{1}[trat1] + \beta_2 \cdot \mathbb{1}[trat2] + \gamma^T X
-$$
+```
 
 | Outcome | Treatment | OR | Interpretation |
 |---------|-----------|-----|----------------|

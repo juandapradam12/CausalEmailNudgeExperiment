@@ -6,9 +6,9 @@ In notebook 02 we estimated the **ATE** (average treatment effect): does the nud
 
 Here we estimate the **CATE** (conditional average treatment effect): does the nudge work *for customers with profile X*?
 
-$$
+```math
 \tau(x) = \mathbb{E}[Y(1) - Y(0) \mid X = x]
-$$
+```
 
 **Meta-learners** (S/T/X-Learner) and **LinearDML** estimate heterogeneous effects. In a randomized controlled trial (RCT) the propensity is ~0.5, which simplifies identification.
 

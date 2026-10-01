@@ -44,6 +44,22 @@ def title(md: Path) -> str:
     return md.stem
 
 
+def to_math_fences(text: str) -> str:
+    # GitHub renders ```math display blocks reliably; multi-line $$...$$ often
+    # shows literally. Convert standalone $$ delimiters to ```math fences.
+    lines, out, in_math = text.split("\n"), [], False
+    for line in lines:
+        if line.strip() == "$$":
+            out.append("```math" if not in_math else "```")
+            in_math = not in_math
+        else:
+            out.append(line)
+    return "\n".join(out)
+
+
+for md in reports:
+    md.write_text(to_math_fences(md.read_text(encoding="utf-8")), encoding="utf-8")
+
 for i, md in enumerate(reports):
     parts = []
     if i == 0:

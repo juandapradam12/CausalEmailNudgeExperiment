@@ -22,9 +22,9 @@ For an effect estimator to have a causal interpretation, assumptions are needed.
 
 ### 2.1 Random assignment (ignorability)
 
-$$
+```math
 Y(0), Y(1) \perp T \quad \Rightarrow \quad \mathbb{E}[Y \mid T=1] - \mathbb{E}[Y \mid T=0] = \mathbb{E}[Y(1) - Y(0)]
-$$
+```
 
 Assignment to `ctrl`, `trat1` or `trat2` is independent of the potential outcomes. That is why the **group difference in means** is a valid average treatment effect (ATE) estimator without adjusting for covariates.
 
@@ -40,9 +40,9 @@ Every customer has a positive probability of being in each arm. With balanced ra
 
 Here there are **three** treatments, not one. For each customer $i$:
 
-$$
+```math
 Y_i(\text{ctrl}),\; Y_i(\text{trat1}),\; Y_i(\text{trat2})
-$$
+```
 
 We only observe one. The comparisons are **pairwise**:
 
@@ -85,9 +85,9 @@ They all estimate $\hat\tau(x)$ from supervised outcome models. Implemented in `
 
 A single model predicts $Y$ using $X$ and $T$:
 
-$$
+```math
 \hat\tau(x) = \hat\mu(x, T=1) - \hat\mu(x, T=0)
-$$
+```
 
 - **Advantage:** simple, a single model.
 - **Risk:** if the treatment effect is small, the model may "ignore" $T$ and underestimate $\tau(x)$.
@@ -98,9 +98,9 @@ In this project: mean S-Learner conditional average treatment effect (CATE) ≈ 
 
 Separate models per arm:
 
-$$
+```math
 \hat\tau(x) = \hat\mu_1(x) - \hat\mu_0(x)
-$$
+```
 
 - **Advantage:** per-arm flexibility; good with strong heterogeneity.
 - **Risk:** error accumulates if an arm has few observations in some segment.
@@ -173,9 +173,9 @@ EconML's `DRLearner` (doubly robust) is powerful on observational data. In tests
 
 Under correct identification and a well-specified model:
 
-$$
+```math
 \frac{1}{n}\sum_i \hat\tau(x_i) \approx \widehat{average treatment effect (ATE)}
-$$
+```
 
 The `validate_cate_vs_ate` function in `src/causal.py` compares:
 
@@ -199,18 +199,18 @@ The `validate_cate_vs_ate` function in `src/causal.py` compares:
 
 The funnel imposes structure:
 
-$$
+```math
 \text{ctor} = \text{or} \times \text{click\_if\_opened}
 \quad\Rightarrow\quad
 \mathbb{E}[\text{ctor}\mid T] = P(\text{or}=1\mid T)\times P(\text{ctor}=1\mid \text{or}=1, T)
-$$
+```
 
 A nudge can raise **opening** (`or`) or **clicks conditional on opening** (CTO). Kitagawa–Blinder–Oaxaca decomposition (treatment weights on the conversion path), implemented in `src/mediation.py`:
 
-$$
+```math
 \Delta\text{ctor} = \underbrace{\text{CTO}_{\text{ctrl}}\cdot\Delta\text{or}}_{\text{via opening}}
 + \underbrace{\text{OR}_{\text{trat}}\cdot\Delta\text{CTO}}_{\text{via conversion}}
-$$
+```
 
 | Comparison | average treatment effect (ATE) ctor | Via opening | Via conversion | Conversion share |
 |------------|----------|-------------|----------------|------------------|
