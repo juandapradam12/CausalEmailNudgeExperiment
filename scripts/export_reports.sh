@@ -29,6 +29,7 @@ done
 # and the conceptual docs (report 01's Previous links back to CAUSAL_ML.md); the
 # last report ends the chain (no Next).
 python - "$OUT_DIR" <<'PY'
+import re
 import sys
 from pathlib import Path
 
@@ -57,8 +58,15 @@ def to_math_fences(text: str) -> str:
     return "\n".join(out)
 
 
+def strip_dataframe_style(text: str) -> str:
+    # pandas DataFrame HTML embeds a <style scoped>...</style> block that GitHub
+    # shows as literal CSS text; drop it (the <table> still renders).
+    return re.sub(r"<style scoped>.*?</style>\n", "", text, flags=re.S)
+
+
 for md in reports:
-    md.write_text(to_math_fences(md.read_text(encoding="utf-8")), encoding="utf-8")
+    text = md.read_text(encoding="utf-8")
+    md.write_text(strip_dataframe_style(to_math_fences(text)), encoding="utf-8")
 
 for i, md in enumerate(reports):
     parts = []
