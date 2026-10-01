@@ -111,7 +111,7 @@ Y_i^{\text{obs}} = Y_i(T_i), \quad T_i \in \{\text{ctrl}, \text{trat1}, \text{tr
 To compare `trat2` vs `ctrl` on click rate:
 
 ```math
-average treatment effect (ATE) = \mathbb{E}[Y(\text{trat2}) - Y(\text{ctrl})]
+\text{ATE} = \mathbb{E}[Y(\text{trat2}) - Y(\text{ctrl})]
 ```
 
 In a randomized controlled trial (RCT) with a binary outcome, the natural estimator is the **difference in proportions**:

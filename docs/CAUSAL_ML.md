@@ -174,7 +174,7 @@ EconML's `DRLearner` (doubly robust) is powerful on observational data. In tests
 Under correct identification and a well-specified model:
 
 ```math
-\frac{1}{n}\sum_i \hat\tau(x_i) \approx \widehat{average treatment effect (ATE)}
+\frac{1}{n}\sum_i \hat\tau(x_i) \approx \widehat{\text{ATE}}
 ```
 
 The `validate_cate_vs_ate` function in `src/causal.py` compares:
